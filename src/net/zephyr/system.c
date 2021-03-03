@@ -19,7 +19,7 @@
 
 /*------------------ Task ------------------*/
 // As defined in "zenoh/private/system.h"
-// typedef pthread_t _z_task_t;
+typedef pthread_t _z_task_t;
 int _z_task_init(pthread_t *task, pthread_attr_t *attr, void *(*fun)(void *), void *arg)
 {
     return pthread_create(task, attr, fun, arg);
@@ -27,7 +27,7 @@ int _z_task_init(pthread_t *task, pthread_attr_t *attr, void *(*fun)(void *), vo
 
 /*------------------ Mutex ------------------*/
 // As defined in "zenoh/private/system.h"
-// typedef pthread_mutex_t _z_mutex_t;
+typedef pthread_mutex_t _z_mutex_t;
 int _z_mutex_init(pthread_mutex_t *m)
 {
     return pthread_mutex_init(m, 0);
@@ -55,7 +55,7 @@ int _z_mutex_unlock(pthread_mutex_t *m)
 
 /*------------------ Condvar ------------------*/
 // As defined in "zenoh/private/system.h"
-// typedef pthread_cond_t _z_condvar_t;
+typedef pthread_cond_t _z_condvar_t;
 int _z_condvar_init(pthread_cond_t *cv)
 {
     return pthread_cond_init(cv, 0);
@@ -94,7 +94,7 @@ int _z_sleep_s(unsigned int time)
 
 /*------------------ Instant ------------------*/
 // As defined in "zenoh/private/system.h"
-// typedef struct timespec _z_clock_t;
+typedef struct timespec _z_clock_t;
 struct timespec _z_clock_now()
 {
     struct timespec now;
@@ -131,7 +131,7 @@ clock_t _z_clock_elapsed_s(struct timespec *instant)
 
 /*------------------ Time ------------------*/
 // As defined in "zenoh/private/system.h"
-// typedef struct timeval _z_time_t;
+typedef struct timeval _z_time_t;
 struct timeval _z_time_now()
 {
     struct timeval now;

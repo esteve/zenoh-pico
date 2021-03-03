@@ -19,9 +19,9 @@ project(libzenohpico VERSION 0.5.0 LANGUAGES C)
 string(TIMESTAMP PROJECT_VERSION_PATCH "%Y%m%ddev")
 set(PROJECT_VERSION "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH}")
 
-if(NOT CMAKE_BUILD_TYPE)
-  set(CMAKE_BUILD_TYPE Release)
-endif()
+# if(NOT CMAKE_BUILD_TYPE)
+#   set(CMAKE_BUILD_TYPE Release)
+# endif()
 message(STATUS "Building in ${CMAKE_BUILD_TYPE} mode")
 
 option (PACKAGING "Use option on Linux to produce Debian and RPM packages." OFF)
@@ -89,13 +89,12 @@ if (ZENOH_TRANSPORT_BLE STREQUAL "ON")
 endif()
 
 set(THREADS_PREFER_PTHREAD_FLAG ON)
-find_package(Threads REQUIRED)
-
+# find_package(Threads REQUIRED)
 
 # Note: don't use CMAKE_C_STANDARD to be compatible with cmake <3.1.0
-set(CMAKE_C_FLAGS_DEBUG "${ZENOH_DEBUG_OPT} ${ZENOH_PLATFORM_OPT} -std=gnu99 -Wall -Wextra -Wpedantic -Wunused -Wstrict-prototypes -pipe -g -O0")
-set(CMAKE_C_FLAGS_GCOV "${ZENOH_DEBUG_OPT} ${ZENOH_PLATFORM_OPT} -std=gnu99 -fprofile-arcs -ftest-coverage -Wall -Wextra -Wpedantic -Wunused -pipe -g -O0")
-set(CMAKE_C_FLAGS_RELEASE "${ZENOH_DEBUG_OPT} ${ZENOH_PLATFORM_OPT} -std=gnu99 -DNDEBUG -pipe -O3")
+# set(CMAKE_C_FLAGS_DEBUG "${ZENOH_DEBUG_OPT} ${ZENOH_PLATFORM_OPT} -std=gnu99 -Wall -Wextra -Wpedantic -Wunused -Wstrict-prototypes -pipe -g -O0")
+# set(CMAKE_C_FLAGS_GCOV "${ZENOH_DEBUG_OPT} ${ZENOH_PLATFORM_OPT} -std=gnu99 -fprofile-arcs -ftest-coverage -Wall -Wextra -Wpedantic -Wunused -pipe -g -O0")
+# set(CMAKE_C_FLAGS_RELEASE "${ZENOH_DEBUG_OPT} ${ZENOH_PLATFORM_OPT} -std=gnu99 -DNDEBUG -pipe -O3")
 
 
 if (NOT SWIG_JAVA)
@@ -134,6 +133,7 @@ if (UNIX_TARGET)
   file(GLOB Platform_Sources "src/net/unix/*.c")
   list(APPEND Sources ${Platform_Sources})
 elseif (ZEPHYR_TARGET)
+  # find_package(Zephyr REQUIRED HINTS $ENV{ZEPHYR_BASE})
   file(GLOB Platform_Sources "src/net/zephyr/*.c")
   list(APPEND Sources ${Platform_Sources})
 else()
@@ -144,6 +144,9 @@ set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/libs)
 link_directories(${LIBRARY_OUTPUT_PATH})
 
 add_library(${Libname} STATIC ${Sources})
+include_directories(
+  /home/esteve/Projects/adlink/zephyrproject/zephyr/include
+  /home/esteve/Projects/adlink/zephyrproject/zephyr/build/zephyr/include/generated)
 
 if (UNIX_TARGET)
   if (CMAKE_HOST_SYSTEM_NAME MATCHES "Darwin")
